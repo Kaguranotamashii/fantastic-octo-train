@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <title>js实现打字机效果(高斯模糊背景)</title>
+    <style>
+        .root {
+            width: 100%;
+            height: 90%;
+            background: url('https://kaguranotamashii-1308648145.cos.ap-beijing.myqcloud.com/a.jpg') no-repeat 100% 100%;
+            background-size: cover;
+            background-attachment: fixed;
+            background-size:100% 100%
+        }
+        .content {
+            width: 90%;
+            height: auto;
+            background: rgba(255, 255, 255, 0.5);
+            top: 0;
+            left: 0;
+            right: 0;
+            overflow-y: scroll;
+            margin: auto;
+            
+        }
+        .content::before{
+            content: '';
+            position: absolute;
+            top:0;right:0;bottom:0;left:0;
+            filter: blur(3px);
+            margin:-21px;  
+
+            opacity: .8;
+        }
+
+        .content p {
+            padding: 20px 15px;
+            color: rgb(0, 0, 0);
+            text-indent: 20px;
+            font-size: 40px;
+            line-height: 80px;
+            letter-spacing: 10px;
+            /* 清除子元素对父元素filter属性值的继承 */
+            filter: blur(0);
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <audio 
+    autoplay="autoplay" 
+    loop="loop" 
+    preload="auto"
+    src="https://kaguranotamashii-1308648145.cos.ap-beijing.myqcloud.com/2360193683.mp3">
+    </audio>
+
+    <div class="root">
+        <div class="box">
+            <div class="content" id="contents">
+
+            </div>
+        </div>
+
+    </div>
+</body>
+<script>
+    function start() {
+        let str = `
+          又是一年的母亲节,我无法亲自回到您身边,给您送上温暖的拥抱和问候.</br></br>因为学业繁忙,我也很少主动给您打电话,总是您主动关心我的生活和学习.</br></br>我很内疚,觉得自己没有尽到孝道,没有多陪陪您聊聊天.</br></br>现代社会或许是悲哀的,物质生活越来越丰富,亲情却越来越淡薄.</br></br>母亲,您是我生命中最重要的人,您把我带到这个美好的世界,让我感受到生命的奇妙,您把幼小的我抱在怀里,让我感受到无私的爱意.母亲,您给了我智慧和勇气,让我走向知识和理想的殿堂.</br></br>妈妈,孩子长大了,但是在您眼里,我永远是那个需要您呵护的孩子.妈妈,我长大了,虽然您有时候会说我"翅膀硬了",您也会给我分享一些教育孩子的经验和道理.</br></br>但是,妈妈我太清醒了,我知道的哲理还有事物的道理太多了,我只是在用空虚的理论来填饱自己空洞的灵魂,我在寻找属于自己的路.</br></br>在这条路上,我会遇到很多困难和挑战,妈妈您可以给我指点和鼓励,但是有些路是要靠我自己去探索和闯荡的.
+
+        `
+        let str_ = ''
+        let i = 0
+        let content = document.getElementById('contents')
+        let timer = setInterval(() => {
+            if (str_.length < str.length) {
+                str_ += str[i++]
+                content.innerHTML = '<p>' + str_ + '_</p>'                        //打印时加光标
+            } else {
+                clearInterval(timer)
+                content.innerHTML = '<p>' + str_ + '</p>'
+            }
+        }, 100)
+    }
+    start()
+</script>
+
+</html>
